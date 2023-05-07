@@ -1,0 +1,32 @@
+{
+  "name": "scrapper",
+  "version": "1.0.0",
+  "description": "Scrap entire TMBD ids and add it to MongoDB",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SweepApp/scrapper.git"
+  },
+  "keywords": [
+    "node",
+    "tmdb",
+    "scrap",
+    "api"
+  ],
+  "author": "Theo BOURDIER <theobourdier1@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SweepApp/scrapper/issues"
+  },
+  "homepage": "https://github.com/SweepApp/scrapper#readme",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "fs": "^0.0.1-security",
+    "log-symbols": "^5.1.0",
+    "mongoose": "^7.1.0"
+  }
+}
