@@ -5,6 +5,8 @@ import logSymbols from 'log-symbols';
 import mongoose from 'mongoose';
 dotenv.config();
 
+import tvSchema from "./schemas/tvSchema.mjs";
+
 const database = process.env.DATABASE;
 const apiKey = process.env.API_KEY;
 const baseUrl = "https://api.themoviedb.org/3/tv/"; 
@@ -16,27 +18,6 @@ const timeElapsed = Date.now() - startTimer;
 mongoose.connect(database, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-});
-
-const tvSchema = new mongoose.Schema({
-  id: Number,
-  name: String,
-  overview: String,
-  created_by: [
-    {
-      id: Number,
-      name: String,
-    }
-  ],
-  first_air_date: String,
-  poster_path: String,
-  genres: [
-    {
-      id: Number,
-      name: String,
-    }
-  ],
-  vote_average: Number,
 });
 
 const TV = mongoose.model('TV', tvSchema);
