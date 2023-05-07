@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import fs from "fs";
 dotenv.config();
 
 const database = process.env.DATABASE;
