@@ -1,19 +1,10 @@
 import fs from "fs";
-import dotenv from "dotenv";
 import axios from "axios";
 import logSymbols from 'log-symbols';
 import mongoose from 'mongoose';
-dotenv.config();
-
 import tvSchema from "./schemas/tvSchema.mjs";
-
-const database = process.env.DATABASE;
-const apiKey = process.env.API_KEY;
-const baseUrl = "https://api.themoviedb.org/3/tv/"; 
-const language = 'en-US';
-const total = 100; // fs.readFileSync('latestId.json', 'utf8');
-const startTimer = Date.now();
-const timeElapsed = Date.now() - startTimer;
+import { database, apiKey, baseUrl, language, total } from "./config.mjs";
+import formatDate from "./utils/formatDate.mjs";
 
 mongoose.connect(database, {
   useNewUrlParser: true,
@@ -21,20 +12,7 @@ mongoose.connect(database, {
 });
 
 const TV = mongoose.model('TV', tvSchema);
-
-function formatDate(date) {
-  let d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
-
-  if (month.length < 2) 
-      month = '0' + month;
-  if (day.length < 2) 
-      day = '0' + day;
-
-  return [day, month, year].join('_');
-}
+const startTimer = Date.now();
 
 async function fetchData(id) {
   const url = `${baseUrl}${id}?api_key=${apiKey}&language=${language}`;
@@ -81,8 +59,10 @@ async function main() {
     }
   }
   let tvLength = await TV.countDocuments();
+  const timeElapsed = Date.now() - startTimer;
   console.log(`\n${logSymbols.success} Total data fetched: ${tvLength}`);
   console.log(`${logSymbols.info} Time elapsed: ${Math.floor(timeElapsed / 3600000)} hours`);
+  fs.writeFileSync(`log_${formatDate(Date())}.txt`, `Total data fetched: ${tvLength}\nTime elapsed: ${Math.floor(timeElapsed / 3600000)} hours`);
 }
 
 main();
