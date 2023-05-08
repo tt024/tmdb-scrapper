@@ -12,6 +12,7 @@ mongoose.connect(database, {
 });
 
 const TV = mongoose.model('TV', tvSchema);
+let tvLength = await TV.countDocuments();
 const startTimer = Date.now();
 
 async function fetchData(id) {
@@ -33,7 +34,7 @@ async function fetchData(id) {
 
 async function saveData(data) {
   try {
-   await TV.insertMany(data);
+  //  await TV.insertMany(data);
     console.log(`${logSymbols.info} Batch saved to Mongoose database`);
   } catch (err) {
     console.error(`${logSymbols.error} Error saving data to Mongoose database:`, err);
@@ -58,7 +59,6 @@ async function main() {
       count = 0;
     }
   }
-  let tvLength = await TV.countDocuments();
   const timeElapsed = Date.now() - startTimer;
   console.log(`\n${logSymbols.success} Total data fetched: ${tvLength}`);
   console.log(`${logSymbols.info} Time elapsed: ${Math.floor(timeElapsed / 3600000)} hours`);

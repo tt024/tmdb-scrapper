@@ -1,7 +1,11 @@
 import fs from "fs";
 import logSymbols from "log-symbols";
+import dotenv from "dotenv";
+dotenv.config()
 
-function latestId(apiKey) {
+let apiKey = process.env.API_KEY;
+
+function latestId() {
   fetch(`https://api.themoviedb.org/3/tv/latest?api_key=${apiKey}`)
     .then((response) => response.json())
     .then((data) => {

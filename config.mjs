@@ -1,6 +1,9 @@
 import dotenv from "dotenv";
 import fs from "fs";
+import latestId from "./latestId.mjs";
 dotenv.config();
+
+latestId();
 
 const database = process.env.DATABASE;
 const apiKey = process.env.API_KEY;
