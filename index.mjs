@@ -17,7 +17,7 @@ let tvLength = await TV.countDocuments();
 let lastIdFetched = (await TV.find({}).sort({_id: -1}).limit(1))[0].id;
 const startTimer = Date.now();
 
-console.log(`${logSymbols.info} Last ID fetched from Mongoose database: ${lastIdFetched}\n`);
+console.log(`${logSymbols.info} Last ID fetched from Mongoose database: ${lastIdFetched}\n${logSymbols.info} Total data in Mongoose database: ${tvLength}\n`);
 
 async function fetchData(id) {
   const url = `${baseUrl}${id}?api_key=${apiKey}&language=${language}`;
@@ -75,6 +75,7 @@ async function main() {
   const timeElapsed = Date.now() - startTimer;
 
   console.log(`\n${logSymbols.success} New data: ${newDataCounter.length}`);
+  console.log(`${logSymbols.info} Total data: ${tvLength}`)
   console.log(`${logSymbols.info} Time elapsed: ${formatTime(timeElapsed)}`);
   fs.writeFileSync(`log_${formatDate(Date())}.txt`, `Total data: ${tvLength}\nNew data: ${newDataCounter.length}\nTime elapsed: ${formatTime(timeElapsed)}\n`);
 }
