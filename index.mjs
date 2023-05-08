@@ -14,7 +14,7 @@ mongoose.connect(database, {
 
 const TV = mongoose.model('TV', tvSchema);
 let tvLength = await TV.countDocuments();
-let lastIdFetched = (await TV.find({}).sort({_id: -1}).limit(1))[0].id;
+let lastIdFetched = (await TV.find({}).sort({_id: -1}).limit(1))[0].id === undefined ? 0 : (await TV.find({}).sort({_id: -1}).limit(1))[0].id;
 const startTimer = Date.now();
 
 console.log(`${logSymbols.info} Last ID fetched from Mongoose database: ${lastIdFetched}\n${logSymbols.info} Total data in Mongoose database: ${tvLength}\n`);
