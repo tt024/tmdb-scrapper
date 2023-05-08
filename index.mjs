@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import tvSchema from "./schemas/tvSchema.mjs";
 import { database, apiKey, baseUrl, language, total } from "./config.mjs";
 import formatDate from "./utils/formatDate.mjs";
+import formatTime from "./utils/formatTime.mjs";
 
 mongoose.connect(database, {
   useNewUrlParser: true,
@@ -13,7 +14,10 @@ mongoose.connect(database, {
 
 const TV = mongoose.model('TV', tvSchema);
 let tvLength = await TV.countDocuments();
+let lastIdFetched = (await TV.find({}).sort({_id: -1}).limit(1))[0].id;
 const startTimer = Date.now();
+
+console.log(`${logSymbols.info} Last ID fetched from Mongoose database: ${lastIdFetched}\n`);
 
 async function fetchData(id) {
   const url = `${baseUrl}${id}?api_key=${apiKey}&language=${language}`;
@@ -34,8 +38,7 @@ async function fetchData(id) {
 
 async function saveData(data) {
   try {
-  //  await TV.insertMany(data);
-    console.log(`${logSymbols.info} Batch saved to Mongoose database`);
+   await TV.insertMany(data);
   } catch (err) {
     console.error(`${logSymbols.error} Error saving data to Mongoose database:`, err);
     await fs.promises.writeFile(`error_${formatDate(Date())}.txt`, err)
@@ -45,7 +48,8 @@ async function saveData(data) {
 async function main() {
   let allData = [];
   let count = 0;
-  for (let i = 1; i <= total; i++) {
+  let i;
+  for (lastIdFetched ? i = lastIdFetched : i = 1; i <= total; i++) {
     const data = await fetchData(i);
     count++;
 
@@ -55,14 +59,22 @@ async function main() {
 
     if (count === 100) {
       await saveData(allData);
+      console.log(`${logSymbols.info} Full batch saved to Mongoose database`);
+      allData = [];
+      count = 0;
+    } else if (count < 100 && i === JSON.parse(total)) {
+      await saveData(allData);
+      console.log(`${logSymbols.info} Batch with ${allData.length} data saved to Mongoose database`);
       allData = [];
       count = 0;
     }
+
   }
   const timeElapsed = Date.now() - startTimer;
-  console.log(`\n${logSymbols.success} Total data fetched: ${tvLength}`);
-  console.log(`${logSymbols.info} Time elapsed: ${Math.floor(timeElapsed / 3600000)} hours`);
-  fs.writeFileSync(`log_${formatDate(Date())}.txt`, `Total data fetched: ${tvLength}\nTime elapsed: ${Math.floor(timeElapsed / 3600000)} hours`);
+
+  console.log(`\n${logSymbols.success} New data fetched: ${total - lastIdFetched}`);
+  console.log(`${logSymbols.info} Time elapsed: ${formatTime(timeElapsed)}`);
+  fs.writeFileSync(`log_${formatDate(Date())}.txt`, `Total data: ${tvLength}\nNew data fetched: ${total - lastIdFetched}\nTime elapsed: ${formatTime(timeElapsed)}\n`);
 }
 
 main();

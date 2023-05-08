@@ -12,7 +12,7 @@ function latestId() {
       let last = JSON.stringify(data.id);
       fs.writeFile("latestId.json", last, (err) => {
         if (err) throw err;
-        console.log(logSymbols.success, `Latest ID: ${last}`);
+        console.log(logSymbols.info, `Latest ID from The Movie Database: ${last}`);
       });
     });
 }

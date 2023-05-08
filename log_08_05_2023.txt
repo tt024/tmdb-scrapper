@@ -1,0 +1,3 @@
+Total data: 150576
+New data fetched: 67
+Time elapsed: 00h 00m 05s
