@@ -13,7 +13,7 @@ mongoose.connect(database, {
 });
 
 const TV = mongoose.model('TV', tvSchema);
-let tvLength = await TV.countDocuments();
+let tvLength = TV.countDocuments();
 let lastIdFetched = (await TV.find({}).sort({_id: -1}).limit(1))[0].id;
 const startTimer = Date.now();
 
