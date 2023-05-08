@@ -47,6 +47,7 @@ async function saveData(data) {
 
 async function main() {
   let allData = [];
+  let newDataCounter = [];
   let count = 0;
   let i;
   for (lastIdFetched ? i = lastIdFetched : i = 1; i <= total; i++) {
@@ -55,6 +56,7 @@ async function main() {
 
     if (data) {
       allData.push(data);
+      newDataCounter.push(data);
     }
 
     if (count === 100) {
@@ -72,9 +74,9 @@ async function main() {
   }
   const timeElapsed = Date.now() - startTimer;
 
-  console.log(`\n${logSymbols.success} New data fetched: ${total - lastIdFetched}`);
+  console.log(`\n${logSymbols.success} New data: ${newDataCounter.length}`);
   console.log(`${logSymbols.info} Time elapsed: ${formatTime(timeElapsed)}`);
-  fs.writeFileSync(`log_${formatDate(Date())}.txt`, `Total data: ${tvLength}\nNew data fetched: ${total - lastIdFetched}\nTime elapsed: ${formatTime(timeElapsed)}\n`);
+  fs.writeFileSync(`log_${formatDate(Date())}.txt`, `Total data: ${tvLength}\nNew data: ${newDataCounter.length}\nTime elapsed: ${formatTime(timeElapsed)}\n`);
 }
 
 main();
