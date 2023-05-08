@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import fs from "fs";
-import latestId from "./latestId.mjs";
+import latestId from "./utils/latestId.mjs";
 dotenv.config();
 
 latestId();

@@ -38,7 +38,7 @@ async function fetchData(id) {
 
 async function saveData(data) {
   try {
-   await TV.insertMany(data);
+  //  await TV.insertMany(data);
   } catch (err) {
     console.error(`${logSymbols.error} Error saving data to Mongoose database:`, err);
     await fs.promises.writeFile(`error_${formatDate(Date())}.txt`, err)
