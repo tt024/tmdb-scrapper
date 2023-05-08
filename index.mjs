@@ -75,7 +75,7 @@ async function main() {
   const timeElapsed = Date.now() - startTimer;
 
   console.log(`\n${logSymbols.success} New data: ${newDataCounter.length}`);
-  console.log(`${logSymbols.info} Total data: ${tvLength}`)
+  console.log(`${logSymbols.info} Total data: ${tvLength + newDataCounter.length}`)
   console.log(`${logSymbols.info} Time elapsed: ${formatTime(timeElapsed)}`);
   fs.writeFileSync(`log_${formatDate(Date())}.txt`, `Total data: ${tvLength}\nNew data: ${newDataCounter.length}\nTime elapsed: ${formatTime(timeElapsed)}\n`);
 }
