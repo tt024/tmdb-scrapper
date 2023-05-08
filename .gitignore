@@ -1,3 +1,4 @@
+.gitignore
 .env
 log_*
 /node_modules
