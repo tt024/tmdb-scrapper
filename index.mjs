@@ -33,7 +33,7 @@ async function fetchData(id) {
 
 async function saveData(data) {
   try {
-    await TV.insertMany(data);
+   await TV.insertMany(data);
     console.log(`${logSymbols.info} Batch saved to Mongoose database`);
   } catch (err) {
     console.error(`${logSymbols.error} Error saving data to Mongoose database:`, err);
