@@ -46,11 +46,6 @@ async function saveData(data) {
   }
 }
 
-async function exitHandler() {
-  mongoose.connection.close();
-  process.exit();
-}
-
 async function main() {
   let allData = [];
   let newDataCounter = [];

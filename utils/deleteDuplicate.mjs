@@ -23,7 +23,7 @@ export default function deleteDuplicate() {
       item.id.shift();
       console.log(`\n${logSymbols.warning} Duplicate data found for ID ${item._id.id}`)
       await TV.deleteMany({_id: {$in: item.id}})
-        .then(() => console.log(`${logSymbols.success} Duplicate data deleted`))
+        .then(() => console.log(`${logSymbols.success} Duplicate ID ${item._id.id} deleted`))
     })
   })
 }
