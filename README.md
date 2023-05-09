@@ -1,6 +1,6 @@
 # Scrapper
 
-![](https://img.shields.io/github/downloads/sweepapp/scrapper/total)
+![Download badge](https://img.shields.io/github/downloads/sweepapp/scrapper/total)
 
 This is a Node.js application that fetches TV show data from the [The Movie Database API](https://developers.themoviedb.org/3/getting-started/introduction) and saves it to a JSON file. The application uses the `fs`, `dotenv`, `axios`, `mongoose` and `log-symbol` Node.js packages, which can be installed using `npm`.
 
@@ -9,14 +9,16 @@ The dataset of all the details of TV show is available on [Kaggle](https://www.k
 ## Installation
 
 1. Clone the repository or download the code.
-```
+
+```bash
 git clone https://github.com/SweepApp/scrapper.git
 ```
 
 2. Open the command line and navigate to the project directory.
-```
+
+```bash
 cd scrapper-main
-``` 
+```
 
 3. Run `npm install` to install the required packages.
 
@@ -26,7 +28,7 @@ Before running the application, you need to set your API key in a `.env` file in
 
 Create a `.env` file in the project directory and add the following line, replacing `YOUR_API_KEY` with your actual API key and `YOUR_MONGODB_URL` with your actual MongoDB URL:
 
-```
+```bash
 API_KEY=YOUR_API_KEY
 DATABASE=YOUR_MONGODB_URL
 ```
@@ -39,7 +41,7 @@ DATABASE=YOUR_MONGODB_URL
 
 To run the application, open the command line and navigate to the project directory. Then run the following command:
 
-```
+```bash
 node server.mjs
 ```
 
