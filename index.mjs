@@ -2,7 +2,7 @@ import fs from "fs";
 import axios from "axios";
 import logSymbols from 'log-symbols';
 import mongoose from 'mongoose';
-import tvSchema from "./schemas/tvSchema.mjs";
+import tvModel from "./models/tv.mjs";
 import { database, apiKey, baseUrl, language, total } from "./config.mjs";
 import formatDate from "./utils/formatDate.mjs";
 import formatTime from "./utils/formatTime.mjs";
@@ -13,7 +13,7 @@ mongoose.connect(database, {
   useUnifiedTopology: true
 });
 
-const TV = mongoose.model('TV', tvSchema);
+const TV = mongoose.model('TV', tvModel);
 let tvLength = await TV.countDocuments();
 let lastIdFetched = (await TV.find({}).sort({_id: -1}).limit(1))[0].id === undefined ? 0 : (await TV.find({}).sort({_id: -1}).limit(1))[0].id;
 const startTimer = Date.now();

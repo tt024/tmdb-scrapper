@@ -1,8 +1,8 @@
-import tvSchema from '../schemas/tvSchema.mjs';
+import tvModel from '../models/tv.mjs';
 import logSymbols from 'log-symbols';
 import mongoose from 'mongoose';
 
-const TV = mongoose.model('TV', tvSchema);
+const TV = mongoose.model('TV', tvModel);
 
 export default function deleteDuplicate() {
   TV.aggregate([
