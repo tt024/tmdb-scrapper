@@ -21,28 +21,35 @@ const startTimer = Date.now();
 
 // await TV.aggregate([
 //   { $match: { 
-//     name: { "$ne": '' }  // discard selection criteria
+//     id: { "$ne": '' }
 //   }},
 //   { $group: { 
-//     _id: { name: "$name"}, // can be grouped on multiple properties 
+//     _id: { id: "$id"},
 //     dups: { "$addToSet": "$_id" }, 
 //     count: { "$sum": 1 } 
 //   }},
 //   { $match: { 
-//     count: { "$gt": 1 }    // Duplicates considered as count greater than one
+//     count: { "$gt": 1 }
 //   }}
 // ],
-// {allowDiskUse: true}       // For faster processing if set is larger
-// )               // You can display result until this and check duplicates 
-// .forEach(function(doc) {
-//     doc.dups.shift();      // First element skipped for deleting
-//     doc.dups.forEach( function(dupId){ 
-//         duplicates.push(dupId);   // Getting all duplicate ids
-//         }
-//     )
-// })
-
-// TV.remove({_id:{$in:duplicates}})  
+// {allowDiskUse: true}
+// ).then((item) => {
+//     item.forEach((doc) => { 
+//         doc.dups.shift();      
+//         doc.dups.forEach((dupId) => { 
+//             duplicates.push(dupId);
+//             }
+//         )
+//     })
+//     console.log(`${logSymbols.warning} Total duplicate items found: ${duplicates.length}`);
+//     // TV.deleteMany({_id:{$in:duplicates}})  
+//     // .then((res) => {
+//     //     console.log(`${logSymbols.success} Duplicate items deleted: ${res.deletedCount}`);
+//     // })
+// })               
+// .catch((err)=>{
+//     console.log(logSymbols.error, err)
+// });
 
 console.log(`${logSymbols.info} Last ID fetched from Mongoose database: ${lastIdFetched}\n${logSymbols.info} Total data in Mongoose database: ${tvLength}\n`);
 
@@ -65,7 +72,7 @@ async function fetchData(id) {
 
 async function saveData(data) {
   try {
-  //  await TV.insertMany(data);
+   await TV.insertMany(data);
   } catch (err) {
     console.error(`${logSymbols.error} Error saving data to Mongoose database:`, err);
     await fs.promises.writeFile(`error_${formatDate(Date())}.txt`, err)
@@ -105,6 +112,7 @@ async function main() {
   console.log(`${logSymbols.info} Total data: ${tvLength + newDataCounter.length}`)
   console.log(`${logSymbols.info} Time elapsed: ${formatTime(timeElapsed)}`);
   fs.writeFileSync(`log_${formatDate(Date())}.txt`, `Total data: ${tvLength}\nNew data: ${newDataCounter.length}\nTime elapsed: ${formatTime(timeElapsed)}\n`);
+  process.exit();
 }
 
 main();
