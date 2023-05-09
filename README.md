@@ -1,5 +1,7 @@
 # Scrapper
 
+https://img.shields.io/github/downloads/sweepapp/scrapper/total
+
 This is a Node.js application that fetches TV show data from the [The Movie Database API](https://developers.themoviedb.org/3/getting-started/introduction) and saves it to a JSON file. The application uses the `fs`, `dotenv`, `axios`, `mongoose` and `log-symbol` Node.js packages, which can be installed using `npm`.
 
 The dataset of all the details of TV show is available on [Kaggle](https://www.kaggle.com/datasets/bourdier/all-tv-series-details-dataset).
