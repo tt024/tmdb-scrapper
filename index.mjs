@@ -77,7 +77,7 @@ async function main() {
 
   console.log(`\n${logSymbols.success} New data: ${newDataCounter.length}`);
   console.log(`${logSymbols.info} Total data: ${tvLength + newDataCounter.length}`)
-  console.log(`${logSymbols.info} Time elapsed: ${formatTime(timeElapsed)}`);
+  console.log(`${logSymbols.info} Time elapsed: ${formatTime(timeElapsed)}\n`);
   fs.writeFileSync(`log_${formatDate(Date())}.txt`, `Total data: ${tvLength}\nNew data: ${newDataCounter.length}\nTime elapsed: ${formatTime(timeElapsed)}\n`);
 
   deleteDuplicate();
