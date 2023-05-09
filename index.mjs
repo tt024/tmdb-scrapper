@@ -17,40 +17,6 @@ let tvLength = await TV.countDocuments();
 let lastIdFetched = (await TV.find({}).sort({_id: -1}).limit(1))[0].id === undefined ? 0 : (await TV.find({}).sort({_id: -1}).limit(1))[0].id;
 const startTimer = Date.now();
 
-// let duplicates = [];
-
-// await TV.aggregate([
-//   { $match: { 
-//     id: { "$ne": '' }
-//   }},
-//   { $group: { 
-//     _id: { id: "$id"},
-//     dups: { "$addToSet": "$_id" }, 
-//     count: { "$sum": 1 } 
-//   }},
-//   { $match: { 
-//     count: { "$gt": 1 }
-//   }}
-// ],
-// {allowDiskUse: true}
-// ).then((item) => {
-//     item.forEach((doc) => { 
-//         doc.dups.shift();      
-//         doc.dups.forEach((dupId) => { 
-//             duplicates.push(dupId);
-//             }
-//         )
-//     })
-//     console.log(`${logSymbols.warning} Total duplicate items found: ${duplicates.length}`);
-//     // TV.deleteMany({_id:{$in:duplicates}})  
-//     // .then((res) => {
-//     //     console.log(`${logSymbols.success} Duplicate items deleted: ${res.deletedCount}`);
-//     // })
-// })               
-// .catch((err)=>{
-//     console.log(logSymbols.error, err)
-// });
-
 console.log(`${logSymbols.info} Last ID fetched from Mongoose database: ${lastIdFetched}\n${logSymbols.info} Total data in Mongoose database: ${tvLength}\n`);
 
 async function fetchData(id) {
@@ -77,6 +43,11 @@ async function saveData(data) {
     console.error(`${logSymbols.error} Error saving data to Mongoose database:`, err);
     await fs.promises.writeFile(`error_${formatDate(Date())}.txt`, err)
   }
+}
+
+function exitHandler() {
+  mongoose.connection.close();
+  process.exit();
 }
 
 async function main() {
@@ -112,7 +83,7 @@ async function main() {
   console.log(`${logSymbols.info} Total data: ${tvLength + newDataCounter.length}`)
   console.log(`${logSymbols.info} Time elapsed: ${formatTime(timeElapsed)}`);
   fs.writeFileSync(`log_${formatDate(Date())}.txt`, `Total data: ${tvLength}\nNew data: ${newDataCounter.length}\nTime elapsed: ${formatTime(timeElapsed)}\n`);
-  process.exit();
+  exitHandler();
 }
 
 main();
