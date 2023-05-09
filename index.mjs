@@ -6,6 +6,7 @@ import tvSchema from "./schemas/tvSchema.mjs";
 import { database, apiKey, baseUrl, language, total } from "./config.mjs";
 import formatDate from "./utils/formatDate.mjs";
 import formatTime from "./utils/formatTime.mjs";
+import deleteDuplicate from "./utils/deleteDuplicate.mjs";
 
 mongoose.connect(database, {
   useNewUrlParser: true,
@@ -45,7 +46,7 @@ async function saveData(data) {
   }
 }
 
-function exitHandler() {
+async function exitHandler() {
   mongoose.connection.close();
   process.exit();
 }
@@ -83,7 +84,8 @@ async function main() {
   console.log(`${logSymbols.info} Total data: ${tvLength + newDataCounter.length}`)
   console.log(`${logSymbols.info} Time elapsed: ${formatTime(timeElapsed)}`);
   fs.writeFileSync(`log_${formatDate(Date())}.txt`, `Total data: ${tvLength}\nNew data: ${newDataCounter.length}\nTime elapsed: ${formatTime(timeElapsed)}\n`);
-  exitHandler();
+
+  deleteDuplicate();
 }
 
 main();
