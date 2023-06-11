@@ -11,7 +11,7 @@ The dataset of all the details of TV show is available on [Kaggle](https://www.k
 1. Clone the repository or download the code.
 
 ```bash
-git clone https://github.com/SweepApp/scrapper.git
+git clone https://github.com/bourdier/scrapper.git
 ```
 
 2. Open the command line and navigate to the project directory.
