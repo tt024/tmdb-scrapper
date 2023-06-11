@@ -1,6 +1,6 @@
 # Scrapper
 
-![Download badge](https://img.shields.io/github/downloads/sweepapp/scrapper/total)
+![Download badge](https://img.shields.io/github/downloads/bourdier/tmdb-scrapper/total)
 
 This is a Node.js application that fetches TV show data from the [The Movie Database API](https://developers.themoviedb.org/3/getting-started/introduction) and saves it to a JSON file. The application uses the `fs`, `dotenv`, `axios`, `mongoose` and `log-symbol` Node.js packages, which can be installed using `npm`.
 
@@ -11,13 +11,13 @@ The dataset of all the details of TV show is available on [Kaggle](https://www.k
 1. Clone the repository or download the code.
 
 ```bash
-git clone https://github.com/bourdier/scrapper.git
+git clone https://github.com/bourdier/tmdb-scrapper.git
 ```
 
 2. Open the command line and navigate to the project directory.
 
 ```bash
-cd scrapper-main
+cd tmdb-scrapper-main
 ```
 
 3. Run `npm install` to install the required packages.
